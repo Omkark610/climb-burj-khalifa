@@ -42,7 +42,7 @@ button.s{background:#1e2736;color:#f4ecdc;border:1px solid #d9b26a44}button:disa
 </style></head><body>
 <div id="ui"><div class="c"><h1>SKYCLIMB<small>BURJ KHALIFA · 828 m</small></h1>
 <p>Scale the outside of the world’s tallest tower at dusk above Downtown Dubai, Burj Lake, and the Arabian Gulf. Stand up and clear a 2 m area.</p>
-<ul><li><b>Grip</b> on a glowing hold, then pull down to climb the glass &amp; steel bundled-tube wings</li><li><b>Release</b> while moving your hands to launch yourself upward</li><li><b>Swing your arms</b> on a platform ring to run around the tower</li><li><b>Land</b> on each ring to bank a stage; reach Stage 5 for the 360° Dubai summit view</li></ul>
+<ul><li><b>Grip</b> on a glowing hold, then pull down to climb the glass &amp; steel bundled-tube wings</li><li><b>Release</b> while moving your hands to launch yourself upward</li><li><b>Thumbstick</b> to run on a ledge · <b>A / X / B / Y</b> to jump (arm-swing running still works)</li><li><b>Checkpoints</b> — land on each ledge to bank it. Fall and you restart from your last checkpoint. Reach the summit ledge for the 360° Dubai view</li></ul>
 <button id="vrb" disabled>CHECKING VR…</button><button id="pv" class="s">PREVIEW ON SCREEN</button><button id="cf" class="s">COMFORT VIGNETTE: ON</button><button id="am" class="s">ACTION LAYER: ON</button></div></div>
 <div id="hud"></div>
 <div id="camBar"><button id="vwBase" class="s">BASE FOUNTAIN</button><button id="vwMid" class="s">MID TOWER (497m)</button><button id="vwTop" class="s">SUMMIT VIEW (828m)</button><button id="vwOrb" class="s">ORBIT: OFF</button><button id="vwSky" class="s">SKY: GOLDEN DUSK</button><button id="vwMenu" class="s">MENU</button></div>
@@ -52,7 +52,7 @@ const MUSIC="data:audio/mpeg;base64,//vQRAAPBT9vugMMM3KGDOfKPGaeGOXa+g280cqzs+Al
 const HT=150,T=15,PI=Math.PI,$=i=>document.getElementById(i);
 const dd=(y,k)=>Math.max(1.6,10-.95*Math.floor(y/T+k/3)),ww=(y,k)=>Math.max(2.4,7.5-.55*Math.floor(y/T+k/3)),AN=[0,1,2].map(k=>PI/2+k*2*PI/3);
 function tex(w,h,fn){const c=document.createElement('canvas');c.width=w;c.height=h;fn(c.getContext('2d'),w,h);const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.wrapS=t.wrapT=THREE.RepeatWrapping;t.anisotropy=4;return t}
-const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(72,innerWidth/innerHeight,.05,5500),rig=new THREE.Group();scene.add(rig);rig.add(cam);cam.position.y=1.7;
+const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(72,innerWidth/innerHeight,.05,5500),rig=new THREE.Group();const bob=new THREE.Group();scene.add(rig);rig.add(bob);bob.add(cam);cam.position.y=1.7;
 const ren=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});ren.setPixelRatio(Math.min(devicePixelRatio,2));ren.setSize(innerWidth,innerHeight);ren.xr.enabled=true;ren.xr.setReferenceSpaceType('local-floor');ren.outputEncoding=THREE.sRGBEncoding;ren.toneMapping=THREE.ACESFilmicToneMapping;ren.toneMappingExposure=1.05;ren.physicallyCorrectLights=true;document.body.appendChild(ren.domElement);ren.xr.setFramebufferScaleFactor(1.1);
 scene.fog=new THREE.FogExp2(0x9a6b5c,.00042);
 const M=(c,m=.2,r=.6, extra={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,metalness:m,roughness:r},extra));
@@ -389,25 +389,36 @@ const plz=new THREE.Mesh(new THREE.CylinderGeometry(31,31,.35,64),M(0x161920,.65
 const pr0=new THREE.Mesh(new THREE.TorusGeometry(30.5,.22,8,96),new THREE.MeshBasicMaterial({color:0xd9b26a}));pr0.rotation.x=PI/2;scene.add(pr0);
 const gtx=tex(64,64,(c,w,h)=>{c.fillStyle='#3a3f48';c.fillRect(0,0,w,h);c.fillStyle='#14161a';for(let a=0;a<8;a++)for(let b=0;b<8;b++)c.fillRect(a*8+1,b*8+1,6,6)});gtx.repeat.set(14,14);
 
-// --- 5 STAGE PLATFORMS & SUMMIT 828m OBSERVATION DECK ---
-const PL=[{y:0,R:1e9}],stageRings=[];
-for(let i=1;i<=5;i++){
-  const y=i*30,R=Math.max(dd(y,0),dd(y,1),dd(y,2))+7;
-  const d=new THREE.Mesh(new THREE.CylinderGeometry(R,R,.42,64),new THREE.MeshStandardMaterial({map:gtx,metalness:.75,roughness:.35}));
-  d.position.y=y-.2;scene.add(d);
-  const cn=new THREE.Mesh(new THREE.CylinderGeometry(R,2.55,6,32,1,true),steel);cn.position.y=y-3.4;scene.add(cn);
-  // Sleek glass safety balustrade + brushed steel handrail
-  const glWall=new THREE.Mesh(new THREE.CylinderGeometry(R-.18,R-.18,1.05,48,1,true),new THREE.MeshStandardMaterial({color:0x9ad8ff,transparent:true,opacity:.24,metalness:.9,roughness:.1,side:THREE.DoubleSide}));
-  glWall.position.y=y+.52;scene.add(glWall);
-  const rl=new THREE.Mesh(new THREE.TorusGeometry(R-.18,.045,8,64),steel);rl.rotation.x=PI/2;rl.position.y=y+1.05;scene.add(rl);
-  for(let q=0;q<24;q++){
-    const a=q/24*PI*2,po=new THREE.Mesh(new THREE.CylinderGeometry(.032,.032,1.05,6),steel);
-    po.position.set(Math.cos(a)*(R-.18),y+.52,Math.sin(a)*(R-.18));scene.add(po);
+// --- CHECKPOINT LEDGES: rectangular balconies on each wing (no circular decks) ---
+gtx.repeat.set(3,3);
+const CPN=6,CPH=HT/CPN,FALLMAX=8,PADS=[],stageRings=[],LAND=[{y:0,i:0,k:-1,ground:1}];
+const padM=new THREE.MeshStandardMaterial({map:gtx,metalness:.75,roughness:.35});
+for(let i=1;i<=CPN;i++){
+  const y=i*CPH,top=i===CPN,gm=new THREE.MeshBasicMaterial({color:top?0xffd27a:0x66e0ff});stageRings.push({material:gm});
+  const sc=document.createElement('canvas');sc.width=512;sc.height=96;const sx=sc.getContext('2d');
+  sx.fillStyle='rgba(7,11,20,.88)';sx.fillRect(0,0,512,96);sx.strokeStyle='#d9b26a';sx.lineWidth=4;sx.strokeRect(4,4,504,88);
+  sx.fillStyle='#ffd98a';sx.font='700 30px system-ui,sans-serif';sx.textAlign='center';
+  sx.fillText(top?'SUMMIT · 828 m':'CHECKPOINT '+i+' · '+Math.round(y/HT*828)+' m',256,60);
+  const st=new THREE.CanvasTexture(sc);st.encoding=THREE.sRGBEncoding;
+  const signM=new THREE.MeshBasicMaterial({map:st,transparent:true,side:THREE.DoubleSide});
+  for(let k=0;k<3;k++){
+    const dB=dd(y-.02,k),hw=ww(y-.02,k)/2+1.6,u0=dB-.6,u1=dB+4.6,len=u1-u0;
+    const g=new THREE.Group();g.rotation.y=-AN[k];scene.add(g);
+    const slab=new THREE.Mesh(new THREE.BoxGeometry(len,.3,hw*2),padM);slab.position.set(u0+len/2,y-.15,0);g.add(slab);
+    const under=new THREE.Mesh(new THREE.BoxGeometry(len-.6,.5,hw*2-.6),darkSteel);under.position.set(u0+len/2-.2,y-.55,0);g.add(under);
+    for(const s of[-1,1]){
+      const e=new THREE.Mesh(new THREE.BoxGeometry(len,.06,.1),gm);e.position.set(u0+len/2,y+.02,s*hw);g.add(e);
+      const po=new THREE.Mesh(new THREE.BoxGeometry(.08,1.5,.08),steel);po.position.set(u1-.2,y+.75,s*(hw-.15));g.add(po);
+      const orb=new THREE.Mesh(new THREE.SphereGeometry(.11,12,10),gm);orb.position.set(u1-.2,y+1.58,s*(hw-.15));g.add(orb);
+      const sp_=new THREE.Mesh(new THREE.BoxGeometry(.05,1.2,.05),steel);sp_.position.set(u1-.2,y+.6,s*1.45);g.add(sp_);
+    }
+    const ef=new THREE.Mesh(new THREE.BoxGeometry(.1,.06,hw*2),gm);ef.position.set(u1,y+.02,0);g.add(ef);
+    const sg=new THREE.Mesh(new THREE.PlaneGeometry(2.6,.49),signM);sg.position.set(u1-.2,y+1.45,0);sg.rotation.y=PI/2;g.add(sg);
+    PADS.push({y,i,k,u0,u1,hw});
   }
-  const r=new THREE.Mesh(new THREE.TorusGeometry(R,.15,10,72),new THREE.MeshBasicMaterial({color:i==5?0xffd27a:0x66e0ff}));
-  r.rotation.x=PI/2;r.position.y=y;scene.add(r);stageRings.push(r);
-  PL.push({y,R});
 }
+LAND.push(...PADS);
+function inPad(p,x,z){if(p.ground)return true;const a=AN[p.k],u=x*Math.cos(a)+z*Math.sin(a),t=-x*Math.sin(a)+z*Math.cos(a);return u>p.u0&&u<p.u1&&Math.abs(t)<p.hw}
 
 // Floating Panoramic Landmark Compass Signs around Summit Observation Deck (y=150)
 {
@@ -418,7 +429,7 @@ for(let i=1;i<=5;i++){
     {t:'SHEIKH ZAYED ROAD · SKYLINE',a:2.85},
     {t:'THE DUBAI FRAME · ZABEEL PARK',a:-2.35}
   ];
-  const sR=PL[5].R-.55;
+  const sR=8.5;
   signs.forEach(s=>{
     const sc=document.createElement('canvas');sc.width=512;sc.height=96;
     const sx=sc.getContext('2d');
@@ -439,13 +450,14 @@ const HP=[];for(let k=0;k<3;k++)for(let y=1.4,r=0;y<HT-1;y+=.62,r++){const w=ww(
 {const im=new THREE.InstancedMesh(new THREE.BoxGeometry(.17,.1,.44),new THREE.MeshStandardMaterial({color:0xd0dce8,metalness:.9,roughness:.25,emissive:0x22b8f0,emissiveIntensity:.75}),HP.length),o=new THREE.Object3D();HP.forEach((p,i)=>{o.position.set(p[0],p[1],p[2]);o.rotation.y=-p[3];o.updateMatrix();im.setMatrixAt(i,o.matrix)});scene.add(im)}
 
 // --- HANDS, WRIST HUD, BANNER & COMFORT VIGNETTE ---
-const grips=[0,1].map(i=>{const g=ren.xr.getControllerGrip(i);rig.add(g);g.userData={};const h=new THREE.Group();h.add(new THREE.Mesh(new THREE.SphereGeometry(.055,16,12),M(0x15181d,.5,.4)),(()=>{const r=new THREE.Mesh(new THREE.TorusGeometry(.06,.01,8,24),new THREE.MeshBasicMaterial({color:0xd9b26a}));r.rotation.y=PI/2;return r})());const gl=M(0x1b1d22,.2,.7);h.add(new THREE.Mesh(new THREE.BoxGeometry(.09,.04,.1),gl));for(let f=0;f<4;f++){const fi=new THREE.Mesh(new THREE.BoxGeometry(.018,.018,.065),gl);fi.position.set(-.03+f*.02,-.01,-.075);fi.rotation.x=.5;h.add(fi)}const sl=new THREE.Mesh(new THREE.CylinderGeometry(.04,.045,.22,12),M(0xd9b26a,.3,.6));sl.rotation.x=PI/2;sl.position.z=.14;h.add(sl);g.add(h);
+const grips=[0,1].map(i=>{const g=ren.xr.getControllerGrip(i);bob.add(g);g.userData={};const h=new THREE.Group();h.add(new THREE.Mesh(new THREE.SphereGeometry(.055,16,12),M(0x15181d,.5,.4)),(()=>{const r=new THREE.Mesh(new THREE.TorusGeometry(.06,.01,8,24),new THREE.MeshBasicMaterial({color:0xd9b26a}));r.rotation.y=PI/2;return r})());const gl=M(0x1b1d22,.2,.7);h.add(new THREE.Mesh(new THREE.BoxGeometry(.09,.04,.1),gl));for(let f=0;f<4;f++){const fi=new THREE.Mesh(new THREE.BoxGeometry(.018,.018,.065),gl);fi.position.set(-.03+f*.02,-.01,-.075);fi.rotation.x=.5;h.add(fi)}const sl=new THREE.Mesh(new THREE.CylinderGeometry(.04,.045,.22,12),M(0xd9b26a,.3,.6));sl.rotation.x=PI/2;sl.position.z=.14;h.add(sl);g.add(h);
 g.addEventListener('connected',e=>{g.userData.gp=e.data.gamepad;if(e.data.handedness=='left')g.add(hm)});g.addEventListener('disconnected',()=>g.userData.gp=null);return g});
 const hc=document.createElement('canvas');hc.width=256;hc.height=128;const hx=hc.getContext('2d'),ht=new THREE.CanvasTexture(hc);ht.encoding=THREE.sRGBEncoding;const hm=new THREE.Mesh(new THREE.PlaneGeometry(.16,.08),new THREE.MeshBasicMaterial({map:ht}));hm.position.set(0,.05,.06);hm.rotation.x=-1.1;
 const bc=document.createElement('canvas');bc.width=512;bc.height=128;const bx=bc.getContext('2d'),bt_=new THREE.CanvasTexture(bc);bt_.encoding=THREE.sRGBEncoding;const bm=new THREE.Mesh(new THREE.PlaneGeometry(.9,.225),new THREE.MeshBasicMaterial({map:bt_,transparent:true,opacity:0,depthTest:false}));bm.position.set(0,.3,-1.2);bm.renderOrder=998;cam.add(bm);
 function say(t){bx.clearRect(0,0,512,128);bx.fillStyle='#d9b26a';bx.font='700 48px Georgia,serif';bx.textAlign='center';bx.fillText(t,256,80);bt_.needsUpdate=true;bsay=3.5}
 const vg=tex(256,256,g=>{const r=g.createRadialGradient(128,128,50,128,128,128);r.addColorStop(0,'rgba(0,0,0,0)');r.addColorStop(1,'rgba(0,0,0,1)');g.fillStyle=r;g.fillRect(0,0,256,256)});vg.wrapS=vg.wrapT=THREE.ClampToEdgeWrapping;
 const vig=new THREE.Mesh(new THREE.PlaneGeometry(2,2),new THREE.MeshBasicMaterial({map:vg,transparent:true,opacity:0,depthTest:false,depthWrite:false}));vig.position.z=-.25;vig.renderOrder=999;cam.add(vig);
+const fadeM=new THREE.Mesh(new THREE.PlaneGeometry(4,4),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:0,depthTest:false,depthWrite:false}));fadeM.position.z=-.2;fadeM.renderOrder=1000;fadeM.visible=false;cam.add(fadeM);
 
 // --- SUMMIT FIREWORKS ---
 const NP=600,fp=new Float32Array(NP*3),fc=new Float32Array(NP*3),fv=new Float32Array(NP*3),fl=new Float32Array(NP);let fn=0;
@@ -465,24 +477,48 @@ function seq(){if(!AC||!actOn)return;while(anext<AC.currentTime+.15){const i=ast
 const buzz=(gp,a,d)=>gp&&gp.hapticActuators&&gp.hapticActuators[0]&&gp.hapticActuators[0].pulse(a,d);
 
 // --- GAME STATE, LOCOMOTION & CAMERA VIEWS ---
+let curK=0,cpK=0,safeY=0,landDip=0,fadeA=0,coy=0,bobP=0,bobA=0,stepI=0,gsp=0,mvx=0,mvz=0;const jb=[0,0],JVEL=5.6;
 let stage=0,pulls=0,started=0,won=0,t0=0,tw=0,fw=0,bsay=0,runv=0,hf=0,fwt=0,orbitOn=false,orbAng=0;
 const vel=new THREE.Vector3(),tv=new THREE.Vector3(),dv=new THREE.Vector3(),pl=[new THREE.Vector3(),new THREE.Vector3()],dl=[new THREE.Vector3(),new THREE.Vector3()],hv=[new THREE.Vector3(),new THREE.Vector3()],gh=[-1,-1],rl=[0,0],ini=[0,0];
-function reset(){rig.position.set(0,0,dd(0,0)+1.8);vel.set(0,0,0);stage=pulls=started=won=fw=0;gh[0]=gh[1]=-1;ini[0]=ini[1]=0;stageRings.forEach((r,idx)=>r.material.color.setHex(idx===4?0xffd27a:0x66e0ff))}
-function supp(){const P=rig.position;for(let j=0;j<PL.length;j++)if(Math.abs(P.y-PL[j].y)<.03&&Math.hypot(P.x,P.z)<PL[j].R)return j;return -1}
-function sup(j){if(j>stage){stage=j;for(let k=0;k<j;k++)if(stageRings[k])stageRings[k].material.color.setHex(0xffd27a);say(j==5?'SUMMIT · 828 m · DUBAI PANORAMA':'Stage '+j+' · '+Math.round(PL[j].y/HT*828)+' m');chime();if(j==5){won=1;tw=performance.now()-t0;fw=12}}}
+function reset(){rig.position.set(0,0,dd(0,0)+1.8);vel.set(0,0,0);stage=pulls=started=won=fw=0;cpK=0;safeY=0;mvx=mvz=gsp=0;landDip=0;fadeA=0;gh[0]=gh[1]=-1;ini[0]=ini[1]=0;stageRings.forEach((r,idx)=>r.material.color.setHex(idx===CPN-1?0xffd27a:0x66e0ff))}
+function supp(){const P=rig.position;if(Math.abs(P.y)<.03)return 0;for(const p of PADS)if(Math.abs(P.y-p.y)<.03&&inPad(p,P.x,P.z)){curK=p.k;return p.i}return -1}
+function sup(j){if(j>0&&j>=stage)cpK=curK;if(j>stage){stage=j;for(let k=0;k<j;k++)if(stageRings[k])stageRings[k].material.color.setHex(0xffd27a);say(j==CPN?'SUMMIT · 828 m · DUBAI PANORAMA':'Checkpoint '+j+' · '+Math.round(j*CPH/HT*828)+' m');chime();if(j==CPN){won=1;tw=performance.now()-t0;fw=12}}}
+function respawn(){const P=rig.position;
+  if(stage>0){const p=PADS.find(q=>q.i===stage&&q.k===cpK)||PADS.find(q=>q.i===stage),a=AN[p.k],u=p.u1-2.4;P.set(Math.cos(a)*u,p.y,Math.sin(a)*u)}
+  else P.set(0,0,dd(0,0)+1.8);
+  vel.set(0,0,0);mvx=mvz=gsp=0;gh[0]=gh[1]=-1;rl[0]=rl[1]=0;ini[0]=ini[1]=0;runv=0;safeY=P.y;fadeA=1;
+  say(stage>0?'FELL · CHECKPOINT '+stage:'FELL · BACK TO START');note(180,.5,.2,'triangle');grips.forEach(g=>buzz(g.userData.gp,.9,220))}
+function jumpFx(){note(340,.12,.1,'triangle');setTimeout(()=>note(520,.1,.06,'triangle'),60);grips.forEach(g=>buzz(g.userData.gp,.5,60))}
 function solid(){const P=rig.position;if(P.y>HT+2)return;for(let k=0;k<3;k++){const a=AN[k],c=Math.cos(a),s=Math.sin(a),u=P.x*c+P.z*s,t=-P.x*s+P.z*c,d=dd(P.y,k)+.35,w=ww(P.y,k)/2+.35;if(u>0&&u<d&&Math.abs(t)<w){const pu=d-u,pt=w-Math.abs(t);if(pu<pt){P.x+=c*pu;P.z+=s*pu}else{const g=Math.sign(t)||1;P.x-=s*g*pt;P.z+=c*g*pt}}}const r=Math.hypot(P.x,P.z);if(r<2.65&&r>0){P.x*=2.65/r;P.z*=2.65/r}}
-function step(dt){const P=rig.position;let n=0;dv.set(0,0,0);
+function step(dt){const P=rig.position;let n=0,jmp=0,sx=0,sy=0;dv.set(0,0,0);
 for(let i=0;i<2;i++){const gr=grips[i],gp=gr.userData.gp,L=gr.position;if(!ini[i]){pl[i].copy(L);ini[i]=1}
 dl[i].copy(pl[i]).sub(L);tv.copy(L).sub(pl[i]).divideScalar(dt);hv[i].lerp(tv,.5);pl[i].copy(L);
 const pr=!!(gp&&gp.buttons.length>1&&(gp.buttons[1].pressed||gp.buttons[0].pressed));
 if(pr&&gh[i]<0){let b=-1,bd=.07;for(let j=0;j<HP.length;j++){const p=HP[j],dx=P.x+L.x-p[0],dy=P.y+L.y-p[1],dz=P.z+L.z-p[2],q=dx*dx+dy*dy+dz*dz;if(q<bd){bd=q;b=j}}if(b>=0){gh[i]=b;pulls++;if(!started){started=1;t0=performance.now()}buzz(gp,.6,40);tick()}}
 else if(!pr&&gh[i]>=0){gh[i]=-1;rl[i]=1}
-if(gh[i]>=0){n++;dv.add(dl[i])}}
-if(n){P.addScaledVector(dv,1.35/n);vel.set(0,0,0);rl[0]=rl[1]=0}
+if(gh[i]>=0){n++;dv.add(dl[i])}
+if(gp){const ax=gp.axes||[],X=ax.length>=4?ax[2]:(ax[0]||0),Y=ax.length>=4?ax[3]:(ax[1]||0);if(Math.hypot(X,Y)>Math.hypot(sx,sy)){sx=X;sy=Y}
+const bt=gp.buttons,jd=!!((bt[4]&&bt[4].pressed)||(bt[5]&&bt[5].pressed));if(jd&&!jb[i])jmp=1;jb[i]=jd?1:0}}
+// thumbstick -> world-space direction relative to where the head faces
+const sm0=Math.hypot(sx,sy),sm=sm0<.18?0:Math.min(1,(sm0-.18)/.7);
+cam.getWorldDirection(tv);tv.y=0;if(tv.lengthSq()<1e-6)tv.set(0,0,-1);tv.normalize();
+const fx=tv.x,fz=tv.z;let sdx=0,sdz=0;if(sm>0){const f_=-sy/sm0,r_=sx/sm0;sdx=fx*f_-fz*r_;sdz=fz*f_+fx*r_}
+if(n){P.addScaledVector(dv,1.35/n);vel.set(0,0,0);rl[0]=rl[1]=0;safeY=P.y;gsp=0;mvx=mvz=0;runv=0}
 else{if(rl[0]||rl[1]){vel.set(0,0,0);for(let i=0;i<2;i++)if(rl[i])vel.sub(hv[i]);vel.multiplyScalar(1.35/(rl[0]+rl[1]));if(vel.length()>12)vel.setLength(12);rl[0]=rl[1]=0}
 const j=supp();
-if(j>=0&&vel.y<=0){vel.set(0,0,0);sup(j);const sw=Math.abs(hv[0].y)+Math.abs(hv[1].y),want=sw>1.2?Math.min(6.5,sw*.8):0;runv+=(want-runv)*.12;if(runv>.2){cam.getWorldDirection(tv);tv.y=0;tv.normalize();P.addScaledVector(tv,runv*dt);if(!started){started=1;t0=performance.now()}}}
-else{runv=0;vel.y-=9.8*dt;vel.x*=.995;vel.z*=.995;const y0=P.y;P.addScaledVector(vel,dt);if(vel.y<=0)for(let q=0;q<PL.length;q++){const p=PL[q];if(y0>=p.y-.001&&P.y<=p.y&&Math.hypot(P.x,P.z)<p.R){P.y=p.y;if(-vel.y>7){note(55,.45,.3);grips.forEach(g=>buzz(g.userData.gp,1,250))}vel.set(0,0,0);sup(q);break}}}}
+if(j>=0&&vel.y<=0){vel.set(0,0,0);safeY=P.y;coy=.14;sup(j);
+  const sw=Math.abs(hv[0].y)+Math.abs(hv[1].y),want=sw>1.2?Math.min(6.5,sw*.8):0;runv+=(want-runv)*.12;
+  const k=1-Math.exp(-12*dt);mvx+=(sdx*6*sm-mvx)*k;mvz+=(sdz*6*sm-mvz)*k;
+  const vx=mvx+(runv>.2?fx*runv:0),vz=mvz+(runv>.2?fz*runv:0);gsp=Math.hypot(vx,vz);
+  if(gsp>.05){P.x+=vx*dt;P.z+=vz*dt;if(!started){started=1;t0=performance.now()}}
+  if(jmp){vel.set(vx*1.08,JVEL,vz*1.08);coy=0;gsp=0;jumpFx();if(!started){started=1;t0=performance.now()}}}
+else{runv=0;gsp=0;mvx=mvz=0;coy-=dt;
+  if(jmp&&coy>0&&vel.y<=0){vel.y=JVEL;coy=0;jumpFx()}
+  vel.y-=9.8*dt;
+  if(sm>0){const k=Math.min(1,1.4*dt);vel.x+=(sdx*6*sm-vel.x)*k;vel.z+=(sdz*6*sm-vel.z)*k}
+  vel.x*=.995;vel.z*=.995;const y0=P.y;P.addScaledVector(vel,dt);let landed=false;
+  if(vel.y<=0)for(let q=0;q<LAND.length;q++){const p=LAND[q];if(y0>=p.y-.001&&P.y<=p.y&&inPad(p,P.x,P.z)){P.y=p.y;if(-vel.y>7){note(55,.45,.3);grips.forEach(g=>buzz(g.userData.gp,1,250))}landDip=Math.min(.14,-vel.y*.014);vel.set(0,0,0);curK=p.k;sup(p.i);safeY=P.y;landed=true;break}}
+  if(!landed&&safeY-P.y>FALLMAX)respawn()}}
 solid()}
 
 const kd={};addEventListener('keydown',e=>{
@@ -521,9 +557,9 @@ function fly(dt){
 
 function hud(){
   const P=rig.position,m=Math.round(Math.max(0,P.y)/HT*828),tm=started?((won?tw:performance.now()-t0)/1000)|0:0,ts=Math.floor(tm/60)+':'+String(tm%60).padStart(2,'0');
-  hx.fillStyle='#070b14';hx.fillRect(0,0,256,128);hx.textAlign='center';hx.fillStyle='#d9b26a';hx.font='700 46px Georgia,serif';hx.fillText(m+' m',128,52);hx.fillStyle='#f4ecdc';hx.font='18px system-ui';hx.fillText('Stage '+stage+' of 5 · '+ts,128,84);hx.fillStyle='#8fb4d8';hx.fillText('Pulls '+pulls,128,110);ht.needsUpdate=true;
+  hx.fillStyle='#070b14';hx.fillRect(0,0,256,128);hx.textAlign='center';hx.fillStyle='#d9b26a';hx.font='700 46px Georgia,serif';hx.fillText(m+' m',128,52);hx.fillStyle='#f4ecdc';hx.font='18px system-ui';hx.fillText('Checkpoint '+stage+' of '+CPN+' · '+ts,128,84);hx.fillStyle='#8fb4d8';hx.fillText('Pulls '+pulls,128,110);ht.needsUpdate=true;
   const zone=m>=780?'SUMMIT PANORAMA (828m)':m>=450?'UPPER SPIRE ZONE':'BURJ LAKE & DOWNTOWN';
-  $('hud').textContent=ren.xr.isPresenting?'':m+' m · '+zone+' · Stage '+stage+'/5 · '+ts+' · WASD/QE fly, drag to look, [1-3] camera presets';
+  $('hud').textContent=ren.xr.isPresenting?'':m+' m · '+zone+' · Checkpoint '+stage+'/'+CPN+' · '+ts+' · WASD/QE fly, drag to look, [1-3] camera presets';
 }
 
 let last=performance.now();
@@ -532,6 +568,16 @@ function frame(){
   const P=rig.position,ox=P.x,oy=P.y,oz=P.z;
   if(ren.xr.isPresenting)step(dt);else fly(dt);
   const spd=Math.hypot(P.x-ox,P.y-oy,P.z-oz)/dt;
+  // Running motion: head bob + sway, footsteps & haptics, landing dip
+  if(ren.xr.isPresenting){
+    const tg=gsp>.3?Math.min(1,gsp/5):0;bobA+=(tg-bobA)*Math.min(1,9*dt);
+    if(gsp>.3){bobP+=dt*(1.5+gsp*.28)*PI;const si=Math.floor(bobP/PI);if(si!==stepI){stepI=si;if(gsp>.6){note(P.y>.02?150:90,.07,.07,'triangle');buzz(grips[si&1].userData.gp,.12,18)}}}
+    landDip*=Math.exp(-7*dt);
+    cam.getWorldDirection(tv);tv.y=0;if(tv.lengthSq()<1e-6)tv.set(0,0,-1);tv.normalize();
+    const swy=Math.sin(bobP)*.016*bobA;
+    bob.position.set(-tv.z*swy,Math.sin(bobP*2)*.026*bobA-landDip,tv.x*swy);
+  }else bob.position.set(0,0,0);
+  if(fadeA>0){fadeA=Math.max(0,fadeA-dt*1.3);fadeM.visible=true;fadeM.material.opacity=Math.min(1,fadeA*1.4)}else fadeM.visible=false;
 
   // Dynamic Summit Panorama Fog Clearing: clearer horizon at high altitude so Dubai landmarks shine
   const altFrac=Math.min(1,Math.max(0,P.y/HT));
@@ -584,11 +630,11 @@ function jumpView(mode){
     rig.position.set(0,3,dd(0,0)+44);yaw=0;pit=.24;cam.rotation.set(pit,yaw,0,'YXZ');
     $('vwBase').classList.add('act');say('BURJ LAKE & FOUNTAIN PLAZA');
   }else if(mode==='mid'){
-    rig.position.set(16,90,18);yaw=.72;pit=-.12;cam.rotation.set(pit,yaw,0,'YXZ');
-    stage=Math.max(stage,3);$('vwMid').classList.add('act');say('STAGE 3 · 497 m');
+    rig.position.set(16,78,18);yaw=.72;pit=-.12;cam.rotation.set(pit,yaw,0,'YXZ');
+    stage=Math.max(stage,3);$('vwMid').classList.add('act');say('CHECKPOINT 3 · 414 m');
   }else if(mode==='top'){
-    rig.position.set(0,HT+.2,PL[5].R-1.8);yaw=PI-.35;pit=-.22;cam.rotation.set(pit,yaw,0,'YXZ');
-    sup(5);fw=14;$('vwTop').classList.add('act');
+    {const tp=PADS.find(p=>p.i===CPN&&p.k===0),tu=tp.u1-2.4;rig.position.set(Math.cos(AN[0])*tu,HT+.2,Math.sin(AN[0])*tu)}yaw=PI-.35;pit=-.22;cam.rotation.set(pit,yaw,0,'YXZ');
+    sup(CPN);fw=14;$('vwTop').classList.add('act');
   }
 }
 $('vwBase').onclick=()=>jumpView('base');
