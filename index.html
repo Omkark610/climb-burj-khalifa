@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-	<!-- Google AdSense -->
+    <!-- Google AdSense -->
     <meta name="google-adsense-account" content="ca-pub-7963880628277539">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7963880628277539" crossorigin="anonymous"></script>
-
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PGR4Y0TVNP"></script>
@@ -13,235 +11,596 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-PGR4Y0TVNP');
     </script>
 
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-	<title>SKYCLIMB · Burj Khalifa VR</title>
-	<meta name="color-scheme" content="dark">
-	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&display=swap" rel="stylesheet">
-<style>
-:root{--g:#d9b26a;--n:#070b14;box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--n);overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;user-select:none}
-canvas{display:block}
-#ui{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 110%,#7a3f1acc,#070b14f0 65%);color:#f4ecdc;padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px);z-index:20;backdrop-filter:blur(6px)}
-.c{width:min(94vw,560px);padding:32px 28px;border:1px solid #d9b26a88;border-radius:6px;background:linear-gradient(180deg,#0d1526f2,#080d18f5);box-shadow:0 24px 60px #000c,inset 0 1px 0 #ffffff1a;text-align:center}
-h1{font:700 40px/1.05 "Cormorant Garamond",Georgia,serif;margin:0 0 6px;letter-spacing:.04em;color:#fff;text-shadow:0 2px 18px #d9b26a55}
-h1 small{display:block;font:600 14px "Cormorant Garamond",Georgia,serif;color:var(--g);letter-spacing:.22em;margin-top:8px}
-p{margin:10px 0;font-size:14px;line-height:1.55;opacity:.9}
-ul{list-style:none;padding:0;margin:14px 0;text-align:left;font-size:14px;line-height:1.55}li{padding:6px 0;border-top:1px solid #ffffff18}li b{color:var(--g)}
-button{background:linear-gradient(180deg,#e5c278,#c69c52);color:#1a1208;border:0;border-radius:4px;padding:12px 18px;font-size:14px;font-weight:700;margin:5px 3px;cursor:pointer;transition:transform .12s,filter .15s}
-button:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
-button.s{background:#1e2736;color:#f4ecdc;border:1px solid #d9b26a44}button:disabled{opacity:.45;cursor:default}
-#hud{position:fixed;left:14px;top:calc(12px + env(safe-area-inset-top,0px));color:#f8f1e2;font:600 14px/1.4 system-ui;text-shadow:0 1px 6px #000;pointer-events:none;background:#070b14b3;padding:8px 12px;border-left:3px solid var(--g);border-radius:0 4px 4px 0;backdrop-filter:blur(4px);z-index:10}
-#camBar{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:none;flex-wrap:wrap;gap:6px;z-index:10;background:#070b14cc;padding:7px 9px;border:1px solid #d9b26a55;border-radius:6px;backdrop-filter:blur(6px)}
-#camBar button{margin:0;padding:8px 12px;font-size:12px;letter-spacing:.04em}
-#camBar button.act{background:linear-gradient(180deg,#e5c278,#c69c52);color:#1a1208;border-color:transparent}
-</style></head><body>
-<div id="ui"><div class="c"><h1>SKYCLIMB<small>BURJ KHALIFA · 828 m</small></h1>
-<p>Scale the outside of the world’s tallest tower at dusk above Downtown Dubai, Burj Lake, and the Arabian Gulf. Stand up and clear a 2 m area.</p>
-<ul><li><b>Grip</b> on a glowing hold, then pull down to climb the glass &amp; steel bundled-tube wings</li><li><b>Release</b> while moving your hands to launch yourself upward</li><li><b>Thumbstick</b> to run on a ledge · <b>A / X / B / Y</b> to jump</li><li><b>Checkpoints</b> — Multiple checkpoints are placed along the tower ledges. Collect items at intersections! You have <b>6 lives</b> to restart from your last checkpoint if you fall.</li></ul>
-<button id="vrb" disabled>CHECKING VR…</button><button id="pv" class="s">PREVIEW ON SCREEN</button><button id="cf" class="s">COMFORT VIGNETTE: ON</button><button id="am" class="s">ACTION LAYER: ON</button></div></div>
-<div id="hud">Lives: 6 | Items: 0 | Alt: 0m | Last Checkpoint: Base</div>
-<div id="camBar"><button id="vwBase" class="s">BASE FOUNTAIN</button><button id="vwMid" class="s">MID TOWER (497m)</button><button id="vwTop" class="s">SUMMIT VIEW (828m)</button><button id="vwOrb" class="s">ORBIT: OFF</button><button id="vwSky" class="s">SKY: GOLDEN DUSK</button><button id="vwMenu" class="s">MENU</button></div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>SKYCLIMB · Burj Khalifa VR</title>
+    <meta name="color-scheme" content="dark">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+    :root{--g:#d9b26a;--n:#070b14;box-sizing:border-box}
+    html,body{height:100%;margin:0;background:var(--n);overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;user-select:none}
+    canvas{display:block;width:100%;height:100%}
+    #ui{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 110%,#7a3f1acc,#070b14f0 65%);color:#f4ecdc;padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px);z-index:20;backdrop-filter:blur(6px)}
+    .c{width:min(94vw,560px);padding:32px 28px;border:1px solid #d9b26a88;border-radius:12px;background:linear-gradient(180deg,#0d1526f2,#080d18f5);box-shadow:0 24px 60px #000c,inset 0 1px 0 #ffffff1a;text-align:center}
+    h1{font:700 38px/1.05 "Cormorant Garamond",Georgia,serif;margin:0 0 6px;letter-spacing:.04em;color:#fff;text-shadow:0 2px 18px #d9b26a55}
+    h1 small{display:block;font:600 13px "Cormorant Garamond",Georgia,serif;color:var(--g);letter-spacing:.22em;margin-top:6px}
+    p{margin:10px 0;font-size:14px;line-height:1.5;opacity:.9}
+    ul{list-style:none;padding:0;margin:14px 0;text-align:left;font-size:13px;line-height:1.5}li{padding:6px 0;border-top:1px solid #ffffff18}li b{color:var(--g)}
+    button{background:linear-gradient(180deg,#e5c278,#c69c52);color:#1a1208;border:0;border-radius:6px;padding:12px 18px;font-size:14px;font-weight:700;margin:5px 3px;cursor:pointer;transition:transform .12s,filter .15s}
+    button:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
+    button.s{background:#1e2736;color:#f4ecdc;border:1px solid #d9b26a44}button:disabled{opacity:.45;cursor:default}
+    #hud{position:fixed;left:14px;top:calc(12px + env(safe-area-inset-top,0px));color:#f8f1e2;font:600 14px/1.4 system-ui;text-shadow:0 1px 6px #000;pointer-events:none;background:#070b14b3;padding:8px 12px;border-left:3px solid var(--g);border-radius:0 6px 6px 0;backdrop-filter:blur(4px);z-index:10}
+    #camBar{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:none;flex-wrap:wrap;gap:6px;z-index:10;background:#070b14cc;padding:7px 9px;border:1px solid #d9b26a55;border-radius:8px;backdrop-filter:blur(6px)}
+    #camBar button{margin:0;padding:8px 12px;font-size:12px;letter-spacing:.04em}
+    #camBar button.act{background:linear-gradient(180deg,#e5c278,#c69c52);color:#1a1208;border-color:transparent}
+    </style>
+</head>
+<body>
+<div id="ui">
+  <div class="c">
+    <h1>SKYCLIMB<small>BURJ KHALIFA · 828 m (QUEST 3 VR FREECRAG)</small></h1>
+    <p>Climb <b>ANY SURFACE</b> in VR (Floors, Ceilings, Pillars, Glass, & Spires). Grab everywhere using Meta Quest 3 Controllers!</p>
+    <ul>
+      <li><b>Grip / Trigger:</b> Grab ANY floor, ceiling, wall or hold nearby. Pull towards you to move/climb.</li>
+      <li><b>Momentum Fling:</b> Release Grip while swinging arm to launch yourself upwards or forward!</li>
+      <li><b>Thumbstick:</b> Smooth move & turn on ledges/floors.</li>
+      <li><b>A / X Button:</b> Jump / Thruster boost up.</li>
+    </ul>
+    <button id="vrb" disabled>ENTER VR CLIMB</button>
+    <button id="pv" class="s">DESKTOP PREVIEW</button>
+    <button id="cf" class="s">COMFORT VIGNETTE: OFF</button>
+  </div>
+</div>
+<div id="hud">ALTITUDE: 0 m | CHECKPOINT: BASE</div>
+<div id="camBar">
+  <button id="vwBase" class="s">BASE FOUNTAIN (0m)</button>
+  <button id="vwMid" class="s">MID DECK (452m)</button>
+  <button id="vwTop" class="s">SPIRE SUMMIT (828m)</button>
+  <button id="vwOrb" class="s">ORBIT: OFF</button>
+  <button id="vwMenu" class="s">MENU</button>
+</div>
+
+<!-- Three.js Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <script>
-// Game State
-let lives = 6;
-let itemsCollected = 0;
-let currentCheckpoint = { name: "Base", pos: new THREE.Vector3(0, 10, 25) };
-let playerPos = new THREE.Vector3(0, 10, 25);
+// Global State & Core Vars
+let scene, camera, renderer, xrRig, userCamera;
+let controllers = [];
+let controllerGripPos = [new THREE.Vector3(), new THREE.Vector3()];
+let prevControllerPos = [new THREE.Vector3(), new THREE.Vector3()];
+let controllerVelocities = [new THREE.Vector3(), new THREE.Vector3()];
+let isGrabbing = [false, false];
+let grabAnchorWorld = [new THREE.Vector3(), new THREE.Vector3()];
+let rigAtGrabStart = new THREE.Vector3();
 
-// Set up Three.js scene
-const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x070b14, 0.001);
+// Physics & Player State
+let playerPos = new THREE.Vector3(0, 1.6, 25);
+let playerVelocity = new THREE.Vector3();
+let isGrounded = false;
+let gravity = -9.81;
+let lastCheckpointAlt = 0;
+let checkpointPos = new THREE.Vector3(0, 1.6, 25);
+let vrActive = false;
+let comfortVignette = false;
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
-camera.position.copy(playerPos);
+// Climbing Mesh & Colliders
+let climbableObjects = [];
+let towerGroup = new THREE.Group();
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
-document.body.appendChild(renderer.domElement);
+// Desktop Controls Fallback
+let isDesktop = false;
+let mouseX = 0, mouseY = 0, isMouseDown = false;
+let cameraRotation = { yaw: 0, pitch: 0 };
+let keys = {};
 
-// Lighting
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-scene.add(ambientLight);
+// Initialization
+function init() {
+    // 1. Scene setup
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0c1424);
+    scene.fog = new THREE.FogExp2(0x0c1424, 0.0008);
 
-const dirLight = new THREE.DirectionalLight(0xd9b26a, 1.2);
-dirLight.position.set(100, 300, 100);
-scene.add(dirLight);
+    // Camera & Rig setup for WebXR
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+    userCamera = camera;
 
-// Burj Khalifa Mock Tower Construction
-const towerGroup = new THREE.Group();
-const matTower = new THREE.MeshStandardMaterial({ color: 0x334455, roughness: 0.3, metalness: 0.8 });
-const matLedge = new THREE.MeshStandardMaterial({ color: 0xd9b26a, roughness: 0.5 });
+    xrRig = new THREE.Group();
+    xrRig.position.copy(playerPos);
+    xrRig.add(camera);
+    scene.add(xrRig);
 
-// Tower Sections
-for (let i = 0; i < 15; i++) {
-    const height = 55;
-    const radius = 30 - i * 1.8;
-    const geo = new THREE.CylinderGeometry(radius - 1, radius, height, 6);
-    const mesh = new THREE.Mesh(geo, matTower);
-    mesh.position.y = i * height + height / 2;
-    towerGroup.add(mesh);
+    // Renderer Setup
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.xr.enabled = true;
+    document.body.appendChild(renderer.domElement);
 
-    // Ledges (Intersections)
-    const ledgeGeo = new THREE.CylinderGeometry(radius + 1, radius + 1, 2, 6);
-    const ledgeMesh = new THREE.Mesh(ledgeGeo, matLedge);
-    ledgeMesh.position.y = i * height;
-    towerGroup.add(ledgeMesh);
+    // Lighting
+    setupLighting();
+
+    // Environment & Burj Khalifa Building Generation
+    buildBurjKhalifaTower();
+
+    // VR Controllers Setup
+    setupVRControllers();
+
+    // Event Listeners
+    window.addEventListener('resize', onWindowResize);
+    setupDesktopEvents();
+    checkVRSupport();
+
+    // UI Controls
+    document.getElementById('pv').addEventListener('click', startDesktopMode);
+    document.getElementById('cf').addEventListener('click', toggleComfort);
+    setupHUDButtons();
+
+    // Animation Loop
+    renderer.setAnimationLoop(render);
 }
-scene.add(towerGroup);
 
-// Checkpoints Data
-const checkpoints = [
-    { name: "Base Ledge", pos: new THREE.Vector3(0, 10, 32), mesh: null },
-    { name: "Mid-Tower (275m)", pos: new THREE.Vector3(0, 275, 22), mesh: null },
-    { name: "High-Tower (550m)", pos: new THREE.Vector3(0, 550, 14), mesh: null },
-    { name: "Summit (825m)", pos: new THREE.Vector3(0, 825, 6), mesh: null }
-];
+// Lighting Setup (Golden Hour Dusk Dusk Theme)
+function setupLighting() {
+    const ambientLight = new THREE.AmbientLight(0xffdfb3, 0.6);
+    scene.add(ambientLight);
 
-// Build Checkpoint Markers
-const chkMat = new THREE.MeshBasicMaterial({ color: 0x00ff88, wireframe: true });
-checkpoints.forEach(chk => {
-    const geo = new THREE.CylinderGeometry(2, 2, 0.5, 16);
-    const mesh = new THREE.Mesh(geo, chkMat);
-    mesh.position.copy(chk.pos);
-    scene.add(mesh);
-    chk.mesh = mesh;
-});
+    const sun = new THREE.DirectionalLight(0xffb066, 1.4);
+    sun.position.set(200, 400, 300);
+    sun.castShadow = true;
+    sun.shadow.mapSize.width = 2048;
+    sun.shadow.mapSize.height = 2048;
+    sun.shadow.camera.near = 10;
+    sun.shadow.camera.far = 1200;
+    const d = 150;
+    sun.shadow.camera.left = -d; sun.shadow.camera.right = d;
+    sun.shadow.camera.top = d; sun.shadow.camera.bottom = -d;
+    scene.add(sun);
 
-// Create Pickups at Intersections (Close to each other in clusters)
-const pickups = [];
-const pickupGeo = new THREE.OctahedronGeometry(0.8, 0);
-const pickupMat = new THREE.MeshStandardMaterial({ color: 0xffd700, emissive: 0xffaa00, roughness: 0.2 });
+    const skyLight = new THREE.HemisphereLight(0x38618c, 0x110902, 0.5);
+    scene.add(skyLight);
+}
 
-// Place clusters of 3 items near intersection corners on each tier
-for (let tier = 1; tier < 14; tier += 2) {
-    const y = tier * 55;
-    const radius = 30 - tier * 1.8 + 0.5;
-    
-    // 3 intersection points per tier
-    for (let angleIdx = 0; angleIdx < 3; angleIdx++) {
-        const baseAngle = (angleIdx * Math.PI * 2) / 3;
-        
-        // Cluster 3 items closely together at each intersection
-        for (let offset = -0.8; offset <= 0.8; offset += 0.8) {
-            const angle = baseAngle + (offset * 0.05);
-            const x = Math.cos(angle) * radius;
-            const z = Math.sin(angle) * radius;
-            
-            const item = new THREE.Mesh(pickupGeo, pickupMat);
-            item.position.set(x, y + 1.5, z);
-            scene.add(item);
-            pickups.push(item);
+// Procedural Burj Khalifa & Grabbable Surfaces
+function buildBurjKhalifaTower() {
+    scene.add(towerGroup);
+
+    // Floor Base (Grabbable Ground)
+    const floorGeo = new THREE.CylinderGeometry(150, 150, 2, 32);
+    const floorMat = new THREE.MeshStandardMaterial({ color: 0x111923, roughness: 0.8 });
+    const floor = new THREE.Mesh(floorGeo, floorMat);
+    floor.position.y = -1;
+    floor.receiveShadow = true;
+    towerGroup.add(floor);
+    climbableObjects.push(floor);
+
+    // Tower Tier Data [height, baseRadius, topRadius, yPos, floorsCount]
+    const tiers = [
+        { height: 120, baseR: 28, topR: 22, y: 60 },
+        { height: 140, baseR: 22, topR: 17, y: 190 },
+        { height: 140, baseR: 17, topR: 13, y: 330 },
+        { height: 120, baseR: 13, topR: 9,  y: 460 },
+        { height: 100, baseR: 9,  topR: 6,  y: 570 },
+        { height: 90,  baseR: 6,  topR: 3.5,y: 665 },
+        { height: 73,  baseR: 3.5,topR: 1.5,y: 746.5 },
+        { height: 55,  baseR: 1.5,topR: 0.2,y: 810.5 } // Spire Apex
+    ];
+
+    const steelMat = new THREE.MeshStandardMaterial({
+        color: 0x8fa3bf, roughness: 0.2, metalness: 0.85
+    });
+    const glassMat = new THREE.MeshStandardMaterial({
+        color: 0x224466, roughness: 0.1, metalness: 0.9, transparent: true, opacity: 0.85
+    });
+    const ledgeMat = new THREE.MeshStandardMaterial({
+        color: 0xd9b26a, roughness: 0.4, metalness: 0.6
+    });
+
+    tiers.forEach((tier, idx) => {
+        // Main Tier Y-Shape Wings
+        for (let wing = 0; wing < 3; wing++) {
+            const angle = (wing * Math.PI * 2) / 3;
+            const wingGeo = new THREE.BoxGeometry(tier.baseR * 0.9, tier.height, tier.baseR * 0.5);
+            const wingMesh = new THREE.Mesh(wingGeo, glassMat);
+
+            const offsetR = tier.baseR * 0.45;
+            wingMesh.position.set(Math.cos(angle) * offsetR, tier.y, Math.sin(angle) * offsetR);
+            wingMesh.rotation.y = -angle;
+            wingMesh.castShadow = true;
+            wingMesh.receiveShadow = true;
+
+            towerGroup.add(wingMesh);
+            climbableObjects.push(wingMesh); // Make glass walls grabbable
+        }
+
+        // Central Core Tier Steel Cylinder
+        const coreGeo = new THREE.CylinderGeometry(tier.topR, tier.baseR, tier.height, 12);
+        const coreMesh = new THREE.Mesh(coreGeo, steelMat);
+        coreMesh.position.y = tier.y;
+        coreMesh.castShadow = true;
+        coreMesh.receiveShadow = true;
+        towerGroup.add(coreMesh);
+        climbableObjects.push(coreMesh); // Core structure grabbable
+
+        // Ring Ledges & Ceilings at each tier junction
+        const ledgeGeo = new THREE.CylinderGeometry(tier.baseR + 1.2, tier.baseR + 1.2, 1.5, 16);
+        const ledgeMesh = new THREE.Mesh(ledgeGeo, ledgeMat);
+        ledgeMesh.position.y = tier.y - (tier.height / 2);
+        towerGroup.add(ledgeMesh);
+        climbableObjects.push(ledgeMesh); // Ledges & underneath ceilings completely grabbable
+    });
+
+    // Add Glowing Hold Grips along the tower faces for visual guidance
+    const holdGeo = new THREE.SphereGeometry(0.35, 8, 8);
+    const holdMat = new THREE.MeshStandardMaterial({ color: 0xffb703, emissive: 0xffaa00, emissiveIntensity: 0.8 });
+    for (let h = 5; h < 820; h += 8) {
+        for (let a = 0; a < 3; a++) {
+            const angle = (a * Math.PI * 2) / 3 + (h * 0.02);
+            const radius = 22 * (1 - h / 830) + 1.2;
+            const hold = new THREE.Mesh(holdGeo, holdMat);
+            hold.position.set(Math.cos(angle) * radius, h, Math.sin(angle) * radius);
+            towerGroup.add(hold);
+            climbableObjects.push(hold);
         }
     }
 }
 
-// UI Controls
-const hud = document.getElementById('hud');
-const ui = document.getElementById('ui');
-const pvBtn = document.getElementById('pv');
-const camBar = document.getElementById('camBar');
+// VR Controller & WebXR Setup
+function setupVRControllers() {
+    for (let i = 0; i < 2; i++) {
+        const controller = renderer.xr.getController(i);
 
-pvBtn.addEventListener('click', () => {
-    ui.style.display = 'none';
-    camBar.style.display = 'flex';
-});
+        // Controller Ray & Visual Hand Sphere
+        const handMesh = new THREE.Mesh(
+            new THREE.SphereGeometry(0.06, 16, 16),
+            new THREE.MeshStandardMaterial({ color: 0xd9b26a, roughness: 0.3, metalness: 0.8 })
+        );
+        handMesh.name = "handMesh";
+        controller.add(handMesh);
 
-document.getElementById('vwMenu').addEventListener('click', () => {
-    ui.style.display = 'flex';
-    camBar.style.display = 'none';
-});
+        // Visual Ray
+        const rayGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -0.5)]);
+        const rayMat = new THREE.LineBasicMaterial({ color: 0xd9b26a, transparent: true, opacity: 0.5 });
+        const ray = new THREE.Line(rayGeo, rayMat);
+        ray.name = "grabRay";
+        controller.add(ray);
 
-document.getElementById('vwBase').addEventListener('click', () => respawnAt(checkpoints[0]));
-document.getElementById('vwMid').addEventListener('click', () => respawnAt(checkpoints[1]));
-document.getElementById('vwTop').addEventListener('click', () => respawnAt(checkpoints[3]));
+        // Event listeners for Grab buttons (Grip / Trigger)
+        controller.addEventListener('selectstart', () => onGrabStart(i));
+        controller.addEventListener('selectend', () => onGrabEnd(i));
+        controller.addEventListener('squeezestart', () => onGrabStart(i));
+        controller.addEventListener('squeezeend', () => onGrabEnd(i));
 
-function respawnAt(chk) {
-    currentCheckpoint = chk;
-    playerPos.copy(chk.pos);
-    camera.position.copy(playerPos);
+        xrRig.add(controller);
+        controllers.push(controller);
+    }
 }
 
-// Simple Keyboard Control for Screen Preview Mode
-const keys = {};
-window.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
-window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+// Grab Logic for Free Climbing Anywhere (Walls, Ceilings, Floors)
+function onGrabStart(index) {
+    const controller = controllers[index];
+    if (!controller) return;
 
-function updateHUD() {
-    hud.innerText = `Lives: ${lives} | Items: ${itemsCollected} | Alt: ${Math.round(playerPos.y)}m | Checkpoint: ${currentCheckpoint.name}`;
+    // Get controller position in world space
+    const handWorldPos = new THREE.Vector3();
+    controller.getWorldPosition(handWorldPos);
+
+    // Check proximity to any climbable object or raycast grab
+    let canGrab = false;
+    let targetGrabPoint = handWorldPos.clone();
+
+    // 1. Direct overlap / close contact (0.45m range)
+    for (let obj of climbableObjects) {
+        const bbox = new THREE.Box3().setFromObject(obj);
+        const closestPoint = new THREE.Vector3();
+        bbox.clampPoint(handWorldPos, closestPoint);
+
+        if (handWorldPos.distanceTo(closestPoint) < 0.45) {
+            canGrab = true;
+            targetGrabPoint.copy(closestPoint);
+            break;
+        }
+    }
+
+    // 2. Raycast Grab fallback (up to 1.2m away for floor/ceiling reach)
+    if (!canGrab) {
+        const raycaster = new THREE.Raycaster();
+        const tempMat = new THREE.Matrix4();
+        tempMat.extractRotation(controller.matrixWorld);
+
+        const dir = new THREE.Vector3(0, 0, -1).applyMatrix4(tempMat).normalize();
+        raycaster.set(handWorldPos, dir);
+        raycaster.far = 1.2;
+
+        const intersects = raycaster.intersectObjects(climbableObjects, true);
+        if (intersects.length > 0) {
+            canGrab = true;
+            targetGrabPoint.copy(intersects[0].point);
+        }
+    }
+
+    if (canGrab) {
+        isGrabbing[index] = true;
+        grabAnchorWorld[index].copy(targetGrabPoint);
+        rigAtGrabStart.copy(xrRig.position);
+
+        // Visual feedback
+        const hand = controller.getObjectByName("handMesh");
+        if (hand) hand.material.color.setHex(0x00ffcc);
+
+        // Reset fall velocity when holding
+        playerVelocity.set(0, 0, 0);
+    }
 }
 
-// Game Loop
-function animate() {
-    requestAnimationFrame(animate);
+function onGrabEnd(index) {
+    if (isGrabbing[index]) {
+        isGrabbing[index] = false;
 
-    // Pickup Rotation & Animation
-    pickups.forEach(item => {
-        if (item.visible) {
-            item.rotation.y += 0.03;
-            // Check Collision with player
-            if (camera.position.distanceTo(item.position) < 2.0) {
-                item.visible = false;
-                itemsCollected++;
-                updateHUD();
+        // Visual feedback reset
+        const controller = controllers[index];
+        if (controller) {
+            const hand = controller.getObjectByName("handMesh");
+            if (hand) hand.material.color.setHex(0xd9b26a);
+        }
+
+        // Apply Momentum Fling Launch
+        const launchVelocity = controllerVelocities[index].clone().multiplyScalar(-1.8);
+        if (launchVelocity.length() > 1.2) {
+            playerVelocity.add(launchVelocity);
+        }
+    }
+}
+
+// Update Climbing Motion physics per frame
+function updateVRClimbing(delta) {
+    let activelyGrabbing = false;
+
+    for (let i = 0; i < 2; i++) {
+        if (isGrabbing[i]) {
+            activelyGrabbing = true;
+
+            // Compute hand movement vector
+            const currentHandWorld = new THREE.Vector3();
+            controllers[i].getWorldPosition(currentHandWorld);
+
+            // Compute offset needed to keep hand anchored to grab position
+            const targetRigPos = grabAnchorWorld[i].clone().sub(currentHandWorld.clone().sub(xrRig.position));
+            
+            // Move Rig to match pull
+            xrRig.position.copy(targetRigPos);
+            playerPos.copy(xrRig.position);
+            playerVelocity.set(0, 0, 0);
+
+            // Calculate controller velocity for fling launching
+            controllerVelocities[i].subVectors(currentHandWorld, prevControllerPos[i]).divideScalar(delta);
+            prevControllerPos[i].copy(currentHandWorld);
+        }
+    }
+
+    // Gravity & Physics when not grabbing
+    if (!activelyGrabbing) {
+        playerVelocity.y += gravity * delta;
+        xrRig.position.addScaledVector(playerVelocity, delta);
+        playerPos.copy(xrRig.position);
+
+        // Ground Collision Check
+        if (xrRig.position.y <= 1.6) {
+            xrRig.position.y = 1.6;
+            playerPos.y = 1.6;
+            playerVelocity.set(0, 0, 0);
+            isGrounded = true;
+        }
+
+        // Ledge Landing Detection for Checkpoints
+        climbableObjects.forEach(obj => {
+            if (obj.geometry instanceof THREE.CylinderGeometry) {
+                const topY = obj.position.y + obj.geometry.parameters.height / 2;
+                if (Math.abs(xrRig.position.y - topY - 1.6) < 0.5) {
+                    const distXZ = new THREE.Vector2(xrRig.position.x, xrRig.position.z).length();
+                    if (distXZ < obj.geometry.parameters.radiusTop + 2) {
+                        xrRig.position.y = topY + 1.6;
+                        playerVelocity.y = 0;
+                        isGrounded = true;
+
+                        // Set Checkpoint
+                        if (xrRig.position.y > lastCheckpointAlt + 20) {
+                            lastCheckpointAlt = Math.floor(xrRig.position.y);
+                            checkpointPos.copy(xrRig.position);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Altitude Respawn/Safety Check
+    if (xrRig.position.y < -10) {
+        xrRig.position.copy(checkpointPos);
+        playerVelocity.set(0, 0, 0);
+    }
+}
+
+// VR Thumbstick Movement & Turning
+function handleVRInputs(delta) {
+    const session = renderer.xr.getSession();
+    if (!session) return;
+
+    for (const source of session.inputSources) {
+        if (source.gamepad) {
+            const axes = source.gamepad.axes;
+            // Left Stick: Locomotion (Axes 2,3 or 0,1)
+            if (source.handedness === 'left') {
+                const moveX = axes[2] || axes[0] || 0;
+                const moveZ = axes[3] || axes[1] || 0;
+
+                if (Math.abs(moveX) > 0.15 || Math.abs(moveZ) > 0.15) {
+                    const dir = new THREE.Vector3(moveX, 0, moveZ);
+                    dir.applyQuaternion(camera.quaternion);
+                    dir.y = 0;
+                    dir.normalize();
+                    xrRig.position.addScaledVector(dir, 4.5 * delta);
+                }
+            }
+            // Right Stick: Snap Turning
+            if (source.handedness === 'right') {
+                const turnX = axes[2] || axes[0] || 0;
+                if (Math.abs(turnX) > 0.7) {
+                    if (!source.turned) {
+                        xrRig.rotation.y -= Math.sign(turnX) * (Math.PI / 6);
+                        source.turned = true;
+                    }
+                } else {
+                    source.turned = false;
+                }
             }
         }
-    });
-
-    // Checkpoint detection
-    checkpoints.forEach(chk => {
-        if (camera.position.distanceTo(chk.pos) < 3.0 && currentCheckpoint !== chk) {
-            currentCheckpoint = chk;
-            updateHUD();
-        }
-    });
-
-    // Keyboard Movement (Screen Preview)
-    const speed = 0.4;
-    if (keys['w']) camera.position.z -= speed;
-    if (keys['s']) camera.position.z += speed;
-    if (keys['a']) camera.position.x -= speed;
-    if (keys['d']) camera.position.x += speed;
-    if (keys['q']) camera.position.y += speed; // Climb up
-    if (keys['e']) camera.position.y -= speed; // Climb down
-
-    playerPos.copy(camera.position);
-
-    // Check Fall Down Condition
-    if (playerPos.y < currentCheckpoint.pos.y - 12) {
-        lives--;
-        if (lives > 0) {
-            alert(`You fell! 1 Life lost. Remaining lives: ${lives}\nRestarting from checkpoint: ${currentCheckpoint.name}`);
-            playerPos.copy(currentCheckpoint.pos);
-            camera.position.copy(playerPos);
-        } else {
-            alert(`Game Over! You ran out of lives.\nRestarting from the Base.`);
-            lives = 6;
-            itemsCollected = 0;
-            // Reset pickups
-            pickups.forEach(p => p.visible = true);
-            respawnAt(checkpoints[0]);
-        }
-        updateHUD();
     }
+}
+
+// WebXR Session Management
+function checkVRSupport() {
+    const vrBtn = document.getElementById('vrb');
+    if ('xr' in navigator) {
+        navigator.xr.isSessionSupported('immersive-vr').then((supported) => {
+            if (supported) {
+                vrBtn.disabled = false;
+                vrBtn.innerText = "ENTER VR CLIMB";
+                vrBtn.addEventListener('click', onEnterVR);
+            } else {
+                vrBtn.innerText = "VR NOT SUPPORTED ON THIS DEVICE";
+            }
+        });
+    } else {
+        vrBtn.innerText = "WEBXR NOT AVAILABLE";
+    }
+}
+
+function onEnterVR() {
+    navigator.xr.requestSession('immersive-vr', {
+        optionalFeatures: ['local-floor', 'bounded-floor', 'hand-tracking']
+    }).then((session) => {
+        renderer.xr.setSession(session);
+        document.getElementById('ui').style.display = 'none';
+        document.getElementById('camBar').style.display = 'flex';
+        vrActive = true;
+
+        session.addEventListener('end', () => {
+            vrActive = false;
+            document.getElementById('ui').style.display = 'flex';
+            document.getElementById('camBar').style.display = 'none';
+        });
+    });
+}
+
+// Desktop Mode Fallback
+function startDesktopMode() {
+    isDesktop = true;
+    document.getElementById('ui').style.display = 'none';
+    document.getElementById('camBar').style.display = 'flex';
+}
+
+function setupDesktopEvents() {
+    window.addEventListener('keydown', (e) => keys[e.code] = true);
+    window.addEventListener('keyup', (e) => keys[e.code] = false);
+
+    window.addEventListener('mousedown', (e) => {
+        if (isDesktop && e.button === 0) isMouseDown = true;
+    });
+    window.addEventListener('mouseup', () => isMouseDown = false);
+    window.addEventListener('mousemove', (e) => {
+        if (isDesktop && isMouseDown) {
+            cameraRotation.yaw -= e.movementX * 0.002;
+            cameraRotation.pitch -= e.movementY * 0.002;
+            cameraRotation.pitch = Math.max(-Math.PI/2, Math.min(Math.PI/2, cameraRotation.pitch));
+
+            camera.quaternion.setFromEuler(new THREE.Euler(cameraRotation.pitch, cameraRotation.yaw, 0, 'YXZ'));
+        }
+    });
+}
+
+function updateDesktopControls(delta) {
+    if (!isDesktop) return;
+
+    const moveSpeed = keys['ShiftLeft'] ? 12 : 5;
+    const moveDir = new THREE.Vector3();
+
+    if (keys['KeyW']) moveDir.z -= 1;
+    if (keys['KeyS']) moveDir.z += 1;
+    if (keys['KeyA']) moveDir.x -= 1;
+    if (keys['KeyD']) moveDir.x += 1;
+
+    moveDir.normalize();
+    moveDir.applyQuaternion(camera.quaternion);
+    moveDir.y = 0;
+
+    xrRig.position.addScaledVector(moveDir, moveSpeed * delta);
+
+    // Desktop Jump / Climb up
+    if (keys['Space']) {
+        xrRig.position.y += moveSpeed * delta;
+    }
+    if (keys['KeyC']) {
+        xrRig.position.y -= moveSpeed * delta;
+    }
+}
+
+// Camera Presets & UI Controls
+function setupHUDButtons() {
+    document.getElementById('vwBase').addEventListener('click', () => teleportPlayer(0, 1.6, 25));
+    document.getElementById('vwMid').addEventListener('click', () => teleportPlayer(0, 453.6, 18));
+    document.getElementById('vwTop').addEventListener('click', () => teleportPlayer(0, 829.6, 4));
+    document.getElementById('vwMenu').addEventListener('click', () => {
+        document.getElementById('ui').style.display = 'flex';
+    });
+}
+
+function teleportPlayer(x, y, z) {
+    xrRig.position.set(x, y, z);
+    playerPos.set(x, y, z);
+    playerVelocity.set(0, 0, 0);
+}
+
+function toggleComfort() {
+    comfortVignette = !comfortVignette;
+    document.getElementById('cf').innerText = `COMFORT VIGNETTE: ${comfortVignette ? 'ON' : 'OFF'}`;
+}
+
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+// Main Render Loop
+const clock = new THREE.Clock();
+
+function render() {
+    const delta = Math.min(clock.getDelta(), 0.1);
+
+    if (vrActive) {
+        updateVRClimbing(delta);
+        handleVRInputs(delta);
+    } else if (isDesktop) {
+        updateDesktopControls(delta);
+    }
+
+    // Update HUD
+    const alt = Math.max(0, Math.floor(xrRig.position.y));
+    document.getElementById('hud').innerText = `ALTITUDE: ${alt} m | CHECKPOINT: ${lastCheckpointAlt} m`;
 
     renderer.render(scene, camera);
 }
 
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-updateHUD();
-animate();
+// Window Onload trigger
+window.onload = () => {
+    init();
+};
 </script>
 </body>
 </html>
